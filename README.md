@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+**Aplicação de Chat em Laravel 10 com WebSockets**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Visão Geral:
 
-## About Laravel
+Esta aplicação Laravel 10 apresenta uma funcionalidade de chat em tempo real usando WebSockets, alimentada por `beyondcode/laravel-websockets` e `Echo` para o frontend. A aplicação aproveita as capacidades de transmissão ao vivo do Laravel para permitir uma comunicação contínua entre o servidor e os clientes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Componentes Principais:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Configuração de Transmissão ao Vivo:**
+   
+   A aplicação está configurada para usar o Laravel Echo e o Pusher para transmitir eventos. O `BroadcastServiceProvider` é utilizado para configurar a transmissão.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. **Tratamento de Eventos em Tempo Real:**
+   
+   O evento `App\Events\Chat\SendMessage` é implementado para capturar mensagens enviadas pelos usuários. Este evento é transmitido para o servidor WebSocket e, posteriormente, para os clientes conectados.
 
-## Learning Laravel
+3. **Servidor WebSockets:**
+   
+   O pacote `beyondcode/laravel-websockets` alimenta o servidor WebSocket. Ele permite o manuseio eficiente da comunicação em tempo real, garantindo uma experiência de chat fluida.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. **Frontend Vue JS:**
+   
+   O frontend é desenvolvido usando o Vue JS para criar uma interface de chat interativa e responsiva. O componente Vue se comunica com o servidor usando o Laravel Echo para atualizar mensagens em tempo real.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5. **MessageController:**
+   
+   O `MessageController` lida com a lógica para listar e enviar mensagens. Ele orquestra o fluxo de dados entre o servidor e os componentes Vue.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Uso:
 
-## Laravel Sponsors
+1. **Instalar Dependências:**
+   
+```bash
+   composer install
+   npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Configuração do Ambiente:**
+   
+   Configure as variáveis de ambiente, incluindo as credenciais do Pusher além das variáveis de conexão com o banco de dados, no arquivo `.env`.
 
-### Premium Partners
+```env
+    BROADCAST_DRIVER=pusher
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    PUSHER_APP_ID=myapppid
+    PUSHER_APP_KEY=myappkey
+    PUSHER_APP_SECRET=myappsecret
+    PUSHER_HOST="127.0.0.1"
+    PUSHER_PORT=6001
+    PUSHER_SCHEME=http
+    PUSHER_APP_CLUSTER=mt1
+```
 
-## Contributing
+3. **Migração do Banco de Dados:**
+   
+```bash
+   php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Executar Servidor WebSockets:**
+   
+```bash
+   php artisan websockets:serve
+```
 
-## Code of Conduct
+5. **Compilar Ativos:**
+   
+```bash
+   npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Iniciar Servidor de Desenvolvimento:** (opcional, ignore caso esteja utilizando outro servidor web)
+   
+```bash
+   php artisan serve
+```
 
-## Security Vulnerabilities
+7. **Acessar a Aplicação:** (caso utilize o `artisan serve`)
+   
+   Visite `http://127.0.0.1:8000` no seu navegador e aproveite a funcionalidade de chat em tempo real.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Referências:
 
-## License
+- Documentação Laravel WebSockets: [Beyond Code](https://beyondco.de/docs/laravel-websockets/getting-started/installation)
+- Instalação do Lado do Cliente com Laravel Echo: [Laravel Documentation](https://laravel.com/docs/10.x/broadcasting#client-side-installation)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Notas Adicionais:**
+
+- Ajuste a configuração do Pusher no arquivo `.env` de acordo com os detalhes da sua conta do Pusher.
+- Certifique-se de que seu driver de transmissão (por exemplo, Pusher) está configurado corretamente e acessível.
+
+Sinta-se à vontade para explorar e estender esta aplicação de chat Laravel 10 para atender às necessidades do seu projeto. Boa codificação!
