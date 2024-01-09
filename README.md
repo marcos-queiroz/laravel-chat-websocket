@@ -79,6 +79,7 @@ Esta aplicação Laravel 10 apresenta uma funcionalidade de chat em tempo real u
    
    Visite `http://127.0.0.1:8000` no seu navegador e aproveite a funcionalidade de chat em tempo real.
 
+
 ## Referências:
 
 - Documentação Laravel WebSockets: [Beyond Code](https://beyondco.de/docs/laravel-websockets/getting-started/installation)
@@ -90,3 +91,37 @@ Esta aplicação Laravel 10 apresenta uma funcionalidade de chat em tempo real u
 - Certifique-se de que seu driver de transmissão (por exemplo, Pusher) está configurado corretamente e acessível.
 
 Sinta-se à vontade para explorar e estender esta aplicação de chat Laravel 10 para atender às necessidades do seu projeto. Boa codificação!
+
+
+## Extra
+
+### Backup da Base de Dados com Spatie Laravel Backup
+
+Esta aplicação inclui o pacote `spatie/laravel-backup`, que fornece uma maneira fácil e confiável de fazer backup da base de dados. Os backups são armazenados no diretório `storage/app` do projeto Laravel. Para habilitar e usar essa funcionalidade:
+
+1. **Criar Link Simbólico do Storage:**
+   
+   Laravel utiliza links simbólicos para armazenar e acessar arquivos de forma eficiente. Para criar um link simbólico entre o diretório público e o storage, execute:
+
+```bash
+   php artisan storage:link
+```
+
+2. **Executar Backup:**
+
+Para criar um backup da sua base de dados, execute o seguinte comando Artisan:
+
+```bash
+   php artisan backup:run
+```
+
+Esse comando cria um backup da base de dados e o armazena no diretório configurado (storage/app por padrão).
+
+**Notas Importantes:**
+
+- As configurações de backup podem ser personalizadas no arquivo `config/backup.php`.
+- Verifique regularmente seus backups para garantir que estão sendo executados corretamente.
+- Para mais informações sobre o pacote Spatie Laravel Backup, consulte a [documentação oficial](https://spatie.be/docs/laravel-backup/v8/introduction).
+
+
+Com esses passos, você pode facilmente manter backups regulares da sua base de dados, garantindo a segurança e a integridade dos seus dados.
